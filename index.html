@@ -15,10 +15,10 @@ body {
     color:white;
 }
 
-/* Dark blurred overlay */
+/* Dark soft overlay */
 .overlay {
-    background: rgba(0,0,0,0.6);
-    backdrop-filter: blur(14px);
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(12px);
     height:100%;
     display:flex;
     justify-content:center;
@@ -28,6 +28,7 @@ body {
     padding:20px;
 }
 
+/* Premium glass card */
 .card {
     background: rgba(255,255,255,0.08);
     backdrop-filter: blur(18px);
@@ -36,11 +37,11 @@ body {
     width:95%;
     max-width:420px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-    animation: fadeIn 1s ease forwards;
+    animation: fadeIn 1.2s ease forwards;
 }
 
 h1 { font-weight:500; font-size:24px; }
-p { margin-top:15px; opacity:0.85; }
+p { margin-top:15px; opacity:0.85; line-height:1.5; }
 
 input {
     margin-top:20px;
@@ -63,20 +64,23 @@ button {
     transition:0.3s ease;
 }
 
-button:hover { transform:scale(1.05); }
+button:hover {
+    transform:scale(1.05);
+}
 
 @keyframes fadeIn {
     from { opacity:0; transform:translateY(20px); }
     to { opacity:1; transform:translateY(0); }
 }
 
+/* Floating light particles */
 .particle {
     position:fixed;
     width:6px;
     height:6px;
     background:white;
     border-radius:50%;
-    opacity:0.4;
+    opacity:0.5;
     animation: float 6s linear infinite;
 }
 
@@ -85,6 +89,7 @@ button:hover { transform:scale(1.05); }
     30% { opacity:0.6; }
     100% { transform:translateY(-10vh); opacity:0; }
 }
+
 </style>
 </head>
 
@@ -111,7 +116,7 @@ setInterval(()=>{
     p.style.animationDuration=(Math.random()*3+4)+"s";
     document.body.appendChild(p);
     setTimeout(()=>p.remove(),6000);
-},400);
+},300);
 
 function unlock(){
     let input=document.getElementById("pass").value;
@@ -126,40 +131,18 @@ function unlock(){
 function showMessage(){
     document.getElementById("card").innerHTML=`
         <h1>16 July 1995</h1>
-        <p>The day my queen was born 👑</p>
-        <p>On 20 April 2025… she became my forever ❤️</p>
+        <p>That was the day someone special was born.</p>
+        <p>And on 20 April 2025… she officially became my forever ❤️</p>
         <button onclick="askHug()">Continue</button>
     `;
 }
-
-let penaltyCount=0;
 
 function askHug(){
     document.getElementById("card").innerHTML=`
         <h1>One Important Question</h1>
         <p>Will you give your husband a big hug tonight? 💍</p>
-        <button id="yesBtn" onclick="finalScreen()">Yes ❤️</button>
-        <button id="noBtn" onclick="penalty()">No 🙈</button>
-        <p id="penaltyText"></p>
+        <button onclick="finalScreen()">Yes ❤️</button>
     `;
-}
-
-function penalty(){
-    penaltyCount++;
-    let text=document.getElementById("penaltyText");
-    let noBtn=document.getElementById("noBtn");
-
-    if(penaltyCount<5){
-        text.innerHTML="Penalty Level "+penaltyCount+" 😈 Hug tax increasing...";
-        noBtn.style.position="absolute";
-        noBtn.style.left=Math.random()*70+"vw";
-        noBtn.style.top=Math.random()*70+"vh";
-    } else {
-        text.innerHTML="Maximum Penalty Reached ❤️ Now you must hug 😌";
-        noBtn.style.transition="0.5s";
-        noBtn.style.opacity="0";
-        setTimeout(()=>{ noBtn.style.display="none"; },500);
-    }
 }
 
 function finalScreen(){
