@@ -2,146 +2,192 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Private Access ❤️</title>
+<title>For My Wife ❤️</title>
 
 <style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
 body {
-    margin: 0;
-    text-align: center;
     font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg,#ff758c,#ff7eb3);
-    color: white;
-    overflow: hidden;
+    background: url('assets/wedding.jpg') center/cover no-repeat fixed;
+    height:100vh;
+    overflow:hidden;
+    color:white;
 }
 
-.container {
-    margin-top: 120px;
+/* Dark soft overlay */
+.overlay {
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(12px);
+    height:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    text-align:center;
+    padding:20px;
 }
+
+/* Premium glass card */
+.card {
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(18px);
+    padding:40px;
+    border-radius:20px;
+    width:95%;
+    max-width:420px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    animation: fadeIn 1.2s ease forwards;
+}
+
+h1 { font-weight:500; font-size:24px; }
+p { margin-top:15px; opacity:0.85; line-height:1.5; }
 
 input {
-    padding: 12px;
-    font-size: 16px;
-    border-radius: 8px;
-    border: none;
+    margin-top:20px;
+    padding:14px;
+    width:100%;
+    border-radius:12px;
+    border:none;
+    font-size:16px;
 }
 
 button {
-    padding: 12px 25px;
-    font-size: 16px;
-    border-radius: 30px;
-    border: none;
-    cursor: pointer;
-    margin: 10px;
+    margin-top:20px;
+    padding:12px 25px;
+    border-radius:20px;
+    border:none;
+    font-size:16px;
+    cursor:pointer;
+    background:white;
+    color:black;
+    transition:0.3s ease;
 }
 
-#yes { background: #28a745; color: white; }
-#no { background: #dc3545; color: white; position: absolute; }
-
-img {
-    width: 250px;
-    border-radius: 20px;
-    opacity: 0;
-    transition: 2s;
+button:hover {
+    transform:scale(1.05);
 }
 
-.heart {
-    position: fixed;
-    animation: float 4s linear infinite;
+@keyframes fadeIn {
+    from { opacity:0; transform:translateY(20px); }
+    to { opacity:1; transform:translateY(0); }
+}
+
+/* Floating light particles */
+.particle {
+    position:fixed;
+    width:6px;
+    height:6px;
+    background:white;
+    border-radius:50%;
+    opacity:0.5;
+    animation: float 6s linear infinite;
 }
 
 @keyframes float {
-    0% { transform: translateY(100vh); opacity:1; }
-    100% { transform: translateY(-10vh); opacity:0; }
+    0% { transform:translateY(100vh); opacity:0; }
+    30% { opacity:0.6; }
+    100% { transform:translateY(-10vh); opacity:0; }
 }
+
 </style>
 </head>
 
 <body>
 
-<div class="container" id="login">
-    <h2>🔐 Enter Our Wedding Date (DDMMYYYY)</h2>
-    <input type="password" id="pass" placeholder="e.g. 20042025">
-    <br>
-    <button onclick="checkPass()">Unlock ❤️</button>
-</div>
+<audio id="music" src="assets/music.mp3" loop></audio>
 
-<audio id="music" src="music.mp3" loop></audio>
+<div class="overlay">
+    <div class="card" id="card">
+        <h1>Private Moment</h1>
+        <p>Enter our wedding date (DDMMYYYY)</p>
+        <input type="password" id="pass" placeholder="20042025">
+        <button onclick="unlock()">Unlock ❤️</button>
+    </div>
+</div>
 
 <script>
 
-function checkPass(){
-    let input = document.getElementById("pass").value;
-    if(input === "20042025"){
-        document.getElementById("login").style.display="none";
-        showMain();
+/* Floating particles */
+setInterval(()=>{
+    let p=document.createElement("div");
+    p.classList.add("particle");
+    p.style.left=Math.random()*100+"vw";
+    p.style.animationDuration=(Math.random()*3+4)+"s";
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(),6000);
+},300);
+
+function unlock(){
+    let input=document.getElementById("pass").value;
+    if(input==="20042025"){
         document.getElementById("music").play();
+        showMessage();
     } else {
-        alert("Wrong password 😏 Try again Mrs. Mishra");
+        alert("Wrong date 😌 Try again Mrs. Mishra");
     }
 }
 
-let noClicks = 0;
-
-function showMain(){
-    document.body.innerHTML += `
-    <div class="container">
-        <h1>16 July 1995 was the day a queen was born 👑</h1>
-        <p>And on 20 April 2025 she officially became mine forever ❤️</p>
-        <img id="photo" src="wedding.jpg">
-        <h2>Will you give your husband a big hug tonight? 💍</h2>
-        <button id="yes" onclick="acceptLove()">Yes 💖</button>
-        <button id="no" onclick="penalty()">No 🙈</button>
-        <h3 id="penaltyText"></h3>
-    </div>
+function showMessage(){
+    document.getElementById("card").innerHTML=`
+        <h1>16 July 1995</h1>
+        <p>That was the day someone special was born.</p>
+        <p>And on 20 April 2025… she officially became my forever ❤️</p>
+        <button onclick="askHug()">Continue</button>
     `;
+}
 
-    setTimeout(()=>{
-        document.getElementById("photo").style.opacity=1;
-    },500);
+let penaltyCount = 0;
+
+function askHug(){
+    document.getElementById("card").innerHTML=`
+        <h1>One Important Question</h1>
+        <p>Will you give your husband a big hug tonight? 💍</p>
+        <button id="yesBtn" onclick="finalScreen()">Yes ❤️</button>
+        <button id="noBtn" onclick="penalty()">No 🙈</button>
+        <p id="penaltyText" style="margin-top:15px; opacity:0.8;"></p>
+    `;
 }
 
 function penalty(){
-    noClicks++;
-    let noBtn = document.getElementById("no");
-    let x = Math.random() * (window.innerWidth - 100);
-    let y = Math.random() * (window.innerHeight - 100);
-    noBtn.style.left = x + "px";
-    noBtn.style.top = y + "px";
+    penaltyCount++;
+    let text = document.getElementById("penaltyText");
+    let noBtn = document.getElementById("noBtn");
 
-    document.getElementById("penaltyText").innerHTML =
-        "Penalty Level " + noClicks + " activated 😈<br> Hug tax increasing...";
-
-    if(noClicks >= 5){
-        document.getElementById("penaltyText").innerHTML =
-        "Maximum Penalty Reached ⚠️ You owe 5 extra kisses now 😌";
+    if(penaltyCount < 5){
+        text.innerHTML = "Penalty Level " + penaltyCount + " 😈 Hug tax increasing...";
+        
+        // Move button randomly
+        noBtn.style.position = "absolute";
+        noBtn.style.left = Math.random()*70 + "vw";
+        noBtn.style.top = Math.random()*70 + "vh";
+    }
+    else{
+        text.innerHTML = "Maximum Penalty Reached ❤️ Now you have no choice 😌";
+        
+        // Smooth fade out
+        noBtn.style.transition = "0.5s ease";
+        noBtn.style.opacity = "0";
+        
+        setTimeout(()=>{
+            noBtn.style.display = "none";
+        },500);
     }
 }
 
-function acceptLove(){
-    let token = "HUG-" + Math.floor(Math.random()*100000);
-    document.body.innerHTML = `
-    <div class="container">
-        <h1>Hug Approved ❤️</h1>
-        <h2>Your Hug Claim Token:</h2>
-        <h1>${token}</h1>
-        <p>Valid for unlimited cuddles 😘</p>
-    </div>
-    `;
-    createHearts();
-}
 
-function createHearts(){
-    setInterval(()=>{
-        let heart=document.createElement("div");
-        heart.classList.add("heart");
-        heart.innerHTML="❤️";
-        heart.style.left=Math.random()*100+"vw";
-        heart.style.fontSize=(Math.random()*20+20)+"px";
-        document.body.appendChild(heart);
-        setTimeout(()=>heart.remove(),4000);
-    },200);
+function finalScreen(){
+    let token="HUG-"+Math.floor(Math.random()*99999);
+    document.getElementById("card").innerHTML=`
+        <h1>Hug Approved ❤️</h1>
+        <p>Your Hug Claim Token:</p>
+        <h2 style="margin-top:15px;">${token}</h2>
+        <p style="margin-top:15px;">Valid for unlimited cuddles.</p>
+        <p style="margin-top:20px;">I love you.</p>
+    `;
 }
 
 </script>
+
 </body>
 </html>
