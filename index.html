@@ -1,60 +1,147 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Important Question ❤️</title>
-    <style>
-        body {
-            text-align: center;
-            font-family: Arial, sans-serif;
-            margin-top: 100px;
-            background-color: #ffe6f0;
-        }
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Private Access ❤️</title>
 
-        h1 {
-            color: #d63384;
-        }
+<style>
+body {
+    margin: 0;
+    text-align: center;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg,#ff758c,#ff7eb3);
+    color: white;
+    overflow: hidden;
+}
 
-        .btn {
-            padding: 12px 25px;
-            font-size: 18px;
-            margin: 10px;
-            border: none;
-            cursor: pointer;
-            border-radius: 8px;
-        }
+.container {
+    margin-top: 120px;
+}
 
-        #yes {
-            background-color: #28a745;
-            color: white;
-        }
+input {
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: none;
+}
 
-        #no {
-            background-color: #dc3545;
-            color: white;
-            position: absolute;
-        }
-    </style>
+button {
+    padding: 12px 25px;
+    font-size: 16px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    margin: 10px;
+}
+
+#yes { background: #28a745; color: white; }
+#no { background: #dc3545; color: white; position: absolute; }
+
+img {
+    width: 250px;
+    border-radius: 20px;
+    opacity: 0;
+    transition: 2s;
+}
+
+.heart {
+    position: fixed;
+    animation: float 4s linear infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(100vh); opacity:1; }
+    100% { transform: translateY(-10vh); opacity:0; }
+}
+</style>
 </head>
+
 <body>
 
-<h1>Will you give your husband a big hug tonight? ❤️</h1>
+<div class="container" id="login">
+    <h2>🔐 Enter Our Wedding Date (DDMMYYYY)</h2>
+    <input type="password" id="pass" placeholder="e.g. 20042025">
+    <br>
+    <button onclick="checkPass()">Unlock ❤️</button>
+</div>
 
-<button class="btn" id="yes" onclick="showLove()">Yes 💖</button>
-<button class="btn" id="no" onmouseover="moveButton()">No 🙈</button>
+<audio id="music" src="music.mp3" loop></audio>
 
 <script>
-function showLove() {
-    document.body.innerHTML = "<h1>Yayyyyy ❤️ I knew it 😘</h1>";
+
+function checkPass(){
+    let input = document.getElementById("pass").value;
+    if(input === "20042025"){
+        document.getElementById("login").style.display="none";
+        showMain();
+        document.getElementById("music").play();
+    } else {
+        alert("Wrong password 😏 Try again Mrs. Mishra");
+    }
 }
 
-function moveButton() {
-    let x = Math.random() * window.innerWidth;
-    let y = Math.random() * window.innerHeight;
+let noClicks = 0;
+
+function showMain(){
+    document.body.innerHTML += `
+    <div class="container">
+        <h1>16 July 1995 was the day a queen was born 👑</h1>
+        <p>And on 20 April 2025 she officially became mine forever ❤️</p>
+        <img id="photo" src="wedding.jpg">
+        <h2>Will you give your husband a big hug tonight? 💍</h2>
+        <button id="yes" onclick="acceptLove()">Yes 💖</button>
+        <button id="no" onclick="penalty()">No 🙈</button>
+        <h3 id="penaltyText"></h3>
+    </div>
+    `;
+
+    setTimeout(()=>{
+        document.getElementById("photo").style.opacity=1;
+    },500);
+}
+
+function penalty(){
+    noClicks++;
     let noBtn = document.getElementById("no");
+    let x = Math.random() * (window.innerWidth - 100);
+    let y = Math.random() * (window.innerHeight - 100);
     noBtn.style.left = x + "px";
     noBtn.style.top = y + "px";
-}
-</script>
 
+    document.getElementById("penaltyText").innerHTML =
+        "Penalty Level " + noClicks + " activated 😈<br> Hug tax increasing...";
+
+    if(noClicks >= 5){
+        document.getElementById("penaltyText").innerHTML =
+        "Maximum Penalty Reached ⚠️ You owe 5 extra kisses now 😌";
+    }
+}
+
+function acceptLove(){
+    let token = "HUG-" + Math.floor(Math.random()*100000);
+    document.body.innerHTML = `
+    <div class="container">
+        <h1>Hug Approved ❤️</h1>
+        <h2>Your Hug Claim Token:</h2>
+        <h1>${token}</h1>
+        <p>Valid for unlimited cuddles 😘</p>
+    </div>
+    `;
+    createHearts();
+}
+
+function createHearts(){
+    setInterval(()=>{
+        let heart=document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML="❤️";
+        heart.style.left=Math.random()*100+"vw";
+        heart.style.fontSize=(Math.random()*20+20)+"px";
+        document.body.appendChild(heart);
+        setTimeout(()=>heart.remove(),4000);
+    },200);
+}
+
+</script>
 </body>
 </html>
