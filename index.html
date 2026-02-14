@@ -140,13 +140,42 @@ function showMessage(){
     `;
 }
 
+let penaltyCount = 0;
+
 function askHug(){
     document.getElementById("card").innerHTML=`
         <h1>One Important Question</h1>
         <p>Will you give your husband a big hug tonight? 💍</p>
-        <button onclick="finalScreen()">Yes ❤️</button>
+        
+        <button id="yesBtn" onclick="finalScreen()">Yes ❤️</button>
+        <button id="noBtn" onclick="penalty()">No 🙈</button>
+        
+        <p id="penaltyText" style="margin-top:15px;"></p>
     `;
 }
+
+function penalty(){
+    penaltyCount++;
+    let noBtn = document.getElementById("noBtn");
+    let text = document.getElementById("penaltyText");
+
+    if(penaltyCount < 5){
+        text.innerHTML = "Penalty Level " + penaltyCount + " 😈 Hug tax increasing...";
+        
+        noBtn.style.position = "absolute";
+        noBtn.style.left = Math.random()*70 + "vw";
+        noBtn.style.top = Math.random()*70 + "vh";
+    } 
+    else {
+        text.innerHTML = "Maximum Penalty Reached ❤️ Now you must hug 😌";
+        noBtn.style.transition = "0.4s ease";
+        noBtn.style.opacity = "0";
+        setTimeout(() => {
+            noBtn.style.display = "none";
+        }, 400);
+    }
+}
+
 
 function finalScreen(){
     let token="HUG-"+Math.floor(Math.random()*99999);
