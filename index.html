@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Important Question ❤️</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            margin-top: 100px;
+            background-color: #ffe6f0;
+        }
+
+        h1 {
+            color: #d63384;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            font-size: 18px;
+            margin: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+        #yes {
+            background-color: #28a745;
+            color: white;
+        }
+
+        #no {
+            background-color: #dc3545;
+            color: white;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Will you give your husband a big hug tonight? ❤️</h1>
+
+<button class="btn" id="yes" onclick="showLove()">Yes 💖</button>
+<button class="btn" id="no" onmouseover="moveButton()">No 🙈</button>
+
+<script>
+function showLove() {
+    document.body.innerHTML = "<h1>Yayyyyy ❤️ I knew it 😘</h1>";
+}
+
+function moveButton() {
+    let x = Math.random() * window.innerWidth;
+    let y = Math.random() * window.innerHeight;
+    let noBtn = document.getElementById("no");
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+}
+</script>
+
+</body>
+</html>
