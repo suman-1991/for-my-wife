@@ -100,8 +100,10 @@ button:hover {
 <div class="overlay">
     <div class="card" id="card">
         <h1>Private Moment</h1>
-        <p>Enter our wedding date (DDMMYYYY)</p>
-        <input type="password" id="pass" placeholder="20042025">
+        <p>Select our wedding date</p>
+        
+        <input type="date" id="pass" required>
+        
         <button onclick="unlock()">Unlock ❤️</button>
     </div>
 </div>
@@ -119,12 +121,13 @@ setInterval(()=>{
 },300);
 
 function unlock(){
-    let input=document.getElementById("pass").value;
-    if(input==="20042025"){
+    let input = document.getElementById("pass").value;
+
+    if(input === "2025-04-20"){
         document.getElementById("music").play();
         showMessage();
     } else {
-        alert("Wrong date 😌 Try again Mrs. Mishra");
+        alert("That’s not our date 😌 Try again Mrs. Mishra");
     }
 }
 
